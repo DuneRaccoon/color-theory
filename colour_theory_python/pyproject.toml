@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "color-theory-py"
+version = "0.1.0"
+description = "Simple color theory system built in python to efficiently build colour schemes"
+authors = ["DuneRaccoon <benjamincsherro@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
