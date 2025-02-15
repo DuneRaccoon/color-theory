@@ -1,0 +1,323 @@
+/* ----------------------------------------------
+   RESETS & GLOBAL STYLES
+---------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f6f8fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ----------------------------------------------
+   GRID LAYOUT (3 left panels + 1 right panel)
+---------------------------------------------- */
+.grid-container {
+  display: grid;
+  /* The left column is narrower; the right is wider. */
+  grid-template-columns: 400px 1fr;
+  /* We have 3 rows on the left side (for settings, palette, details),
+     but the right side should span all 3 rows. */
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+    "settings preview"
+    "palette  preview"
+    "details  preview";
+  gap: 20px;
+  min-height: 80vh;
+}
+
+.settings-panel {
+  grid-area: settings;
+}
+
+.palette-panel {
+  grid-area: palette;
+}
+
+.details-panel {
+  grid-area: details;
+}
+
+.preview-panel {
+  grid-area: preview;
+}
+
+/* ----------------------------------------------
+   PANEL STYLES
+---------------------------------------------- */
+.color-input-panel,
+.palette-container,
+.color-details-panel,
+.site-preview-panel {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.panel-title {
+  font-size: 1.3rem;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+/* ----------------------------------------------
+   COLOR INPUT PANEL
+---------------------------------------------- */
+.color-input-panel {
+  gap: 15px;
+}
+
+.color-input-panel .input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.toggle-row {
+  margin-top: 10px;
+}
+
+/* ----------------------------------------------
+   PALETTE DISPLAY
+---------------------------------------------- */
+.palette-container {
+  gap: 20px;
+}
+
+/* Swatches row (9 swatches) */
+.swatches-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+.swatch-box {
+  position: relative;
+  height: 60px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  font-size: 0.8rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  transition: transform 0.1s ease;
+}
+
+.swatch-box:hover {
+  transform: scale(1.03);
+}
+
+.swatch-label {
+  background: rgba(0,0,0,0.3);
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+
+/* Psychology section */
+.psychology-section h4 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.psychology-section p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* ----------------------------------------------
+   COLOR DETAILS PANEL
+---------------------------------------------- */
+.color-details-panel {
+  gap: 10px;
+}
+
+.detail-swatch {
+  width: 100%;
+  height: 80px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  margin-bottom: 10px;
+}
+
+.detail-info p {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* ----------------------------------------------
+   SITE PREVIEW
+---------------------------------------------- */
+.site-container {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+}
+
+.site-nav h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.site-nav li {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.site-nav li:hover {
+  opacity: 0.7;
+}
+
+/* HERO */
+.hero-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero-content h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+.hero-content p {
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+/* CTA button (generic) */
+.cta-button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: inline-block;
+}
+.cta-button:hover {
+  filter: brightness(1.1);
+}
+
+/* FEATURES */
+.features-section {
+  padding: 40px 20px;
+}
+
+.features-section .inner-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.feature-box {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  padding: 20px;
+  width: 250px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+.feature-box h3 {
+  margin-bottom: 10px;
+}
+
+/* TESTIMONIAL */
+.testimonial-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.testimonial-section .inner-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.testimonial-section blockquote {
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+/* CTA SECTION */
+.cta-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.cta-section .inner-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* FOOTER */
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: auto; /* ensures footer sticks to the bottom of the container */
+}
+.site-footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}
