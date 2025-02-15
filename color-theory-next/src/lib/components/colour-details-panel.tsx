@@ -17,6 +17,8 @@ export default function ColorDetailsPanel({ selectedSwatch }: { selectedSwatch: 
   const colorObj = chroma(color);
   const { primaryImpact, secondaryImpact } = getColorPsychologyDescription(colorObj);
 
+  const roleTextColour = chroma.contrast(color, 'black') > 10 ? 'black' : 'white';
+
   const hsl = colorObj.hsl().map((val: any, i: number) => {
     if (i === 0) return `${Math.round(val)}°`;
     return `${Math.round(val * 100)}%`;
@@ -28,7 +30,7 @@ export default function ColorDetailsPanel({ selectedSwatch }: { selectedSwatch: 
 
       <div
         className="w-full h-20 rounded flex items-center justify-center text-white text-lg font-bold shadow-md"
-        style={{ backgroundColor: color }}
+        style={{ backgroundColor: color, color: roleTextColour }}
       >
         {role}
       </div>

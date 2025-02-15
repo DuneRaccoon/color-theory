@@ -19,3 +19,60 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ----------------------------------------------
+   RESETS & GLOBAL STYLES
+---------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f6f8fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ----------------------------------------------
+   GRID LAYOUT (3 left panels + 1 right panel)
+---------------------------------------------- */
+.grid-container {
+  display: grid;
+  /* The left column is narrower; the right is wider. */
+  grid-template-columns: 600px 1fr;
+  /* We have 3 rows on the left side (for settings, palette, details),
+     but the right side should span all 3 rows. */
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+    "settings preview"
+    "palette  preview"
+    "details  preview";
+  gap: 20px;
+  min-height: 80vh;
+}
+
+.settings-panel {
+  grid-area: settings;
+}
+
+.palette-panel {
+  grid-area: palette;
+}
+
+.details-panel {
+  grid-area: details;
+}
+
+.preview-panel {
+  grid-area: preview;
+}

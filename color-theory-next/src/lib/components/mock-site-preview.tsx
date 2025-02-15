@@ -2,11 +2,10 @@ import chroma from 'chroma-js';
 import { PaletteType } from '@/lib/types';
 
 export default function MockSitePreview({ palette, useWhiteBase }: { palette: PaletteType; useWhiteBase: boolean }) {
-  console.log(palette);
 
   // White base => mostly #fff or near white sections, with brand accent in nav or CTA.
   const navBg = useWhiteBase ? palette.primary : palette.primary;
-  const navTextColor = chroma.contrast(navBg, 'black') > 4.5 ? 'black' : 'white';
+  const navTextColor = chroma.contrast(navBg, 'black') > 7.5 ? 'black' : 'white';
 
   const heroBg = useWhiteBase ? '#fff' : palette.monotonal.light;
   const heroTextColor = chroma.contrast(heroBg, 'black') > 4.5 ? 'black' : 'white';
@@ -23,13 +22,13 @@ export default function MockSitePreview({ palette, useWhiteBase }: { palette: Pa
   const footerBg = useWhiteBase ? '#f8f9fa' : palette.monotonal.dark;
   const footerTextColor = chroma.contrast(footerBg, 'black') > 4.5 ? 'black' : 'white';
 
-  // For the hero button
+  // hero button
   const heroCtaBg = useWhiteBase ? palette.complementary : palette.monotonal.dark;
   const heroCtaColor = chroma.contrast(heroCtaBg, 'black') > 4.5 ? 'black' : 'white';
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-semibold text-gray-700">Full Example Site Preview</h2>
+      <h2 className="text-xl font-semibold text-gray-700">Site Preview</h2>
 
       <div className="border border-gray-300 rounded shadow overflow-hidden flex flex-col">
         {/* NAVIGATION */}

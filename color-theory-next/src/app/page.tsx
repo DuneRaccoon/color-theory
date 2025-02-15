@@ -48,11 +48,11 @@ export default function Home() {
   return (
     <div className="max-w-[1400px] mx-auto p-5">
       <div
-        className="grid grid-rows-[auto_auto_1fr] grid-cols-[400px_1fr] gap-5"
+        className="grid-container"
         style={{ minHeight: '80vh' }}
       >
         {/* SETTINGS (Top Left) */}
-        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4"
+        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4 settings-panel"
              style={{ gridArea: 'settings' }}>
           <ColorInputPanel
             colorValue={colorValue}
@@ -65,7 +65,7 @@ export default function Home() {
         </div>
 
         {/* PALETTE DISPLAY (Second row, left) */}
-        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4"
+        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4 palette-panel"
              style={{ gridArea: 'palette' }}>
           <PaletteDisplay
             palette={palette}
@@ -75,13 +75,13 @@ export default function Home() {
         </div>
 
         {/* COLOR DETAILS (Third row, left) */}
-        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4"
+        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4 details-panel"
              style={{ gridArea: 'details' }}>
           <ColorDetailsPanel selectedSwatch={selectedSwatch} />
         </div>
 
         {/* SITE PREVIEW (Right column, spans all rows) */}
-        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4"
+        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4 preview-panel"
              style={{ gridArea: 'preview' }}>
           <MockSitePreview palette={palette} useWhiteBase={useWhiteBase} />
         </div>

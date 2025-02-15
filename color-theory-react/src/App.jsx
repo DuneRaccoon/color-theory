@@ -1,65 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import chroma from 'chroma-js';
-import { themeOptions } from './constants';
 import './App.css';
-/**
- * 2. Primary & Secondary Color Psychology Descriptions
- * Returns a main text and a secondary text for further nuance.
- */
+import { themeOptions } from './constants'; 
+
+// ---------------------------------------------------
+// 2. COLOR PSYCHOLOGY: Provides a broad psychological
+//    description based on the hue of the base color.
+// ---------------------------------------------------
 function getColorPsychologyDescription(color) {
   const hue = color.get('hsl.h');
-
-  // Helper: define a struct with { primaryImpact, secondaryImpact }
-  const desc = (primaryImpact, secondaryImpact) => ({ primaryImpact, secondaryImpact });
-
   if (hue >= 0 && hue < 20) {
-    return desc(
-      'Reds can convey intensity, passion, and energy. They draw strong attention, often used for bold branding or urgent calls to action. Red can stimulate appetite, making it popular in food-related branding.',
-      'Secondarily, red may also evoke impulsiveness or aggression if overused, so balance is key. Subtle usage can reinforce a sense of power, strength, or urgency.'
+    return (
+      'Reds can convey intensity, passion, and energy. They draw strong attention, ' +
+      'often used for bold branding, urgent calls to action, or to evoke excitement. ' +
+      'Red also can stimulate appetite, making it popular in food-related branding.'
     );
   } else if (hue >= 20 && hue < 50) {
-    return desc(
-      'Oranges and deeper warm yellows radiate enthusiasm, optimism, and creativity. They can add fun or adventure to a brand and encourage feelings of confidence.',
-      'Additionally, these hues can cultivate a sense of friendliness and approachability, but too much saturation may appear unprofessional or overwhelming.'
+    return (
+      'Oranges and deeper warm yellows radiate enthusiasm, optimism, and creativity. ' +
+      'They can add a sense of fun or adventure to a brand and encourage feelings of confidence.'
     );
   } else if (hue >= 50 && hue < 70) {
-    return desc(
-      'Bright yellows signify cheerfulness, friendliness, and clarity. They catch the eye quickly and spark positivity, but can become fatiguing if overused.',
-      'On another level, yellows can also symbolize caution (think of safety signs). When toned down, they bring warmth and accessibility to a design.'
+    return (
+      'Bright yellows signify cheerfulness, friendliness, and clarity. ' +
+      'They catch the eye quickly, often used to spark happiness or positivity, but can become fatiguing if overused.'
     );
   } else if (hue >= 70 && hue < 170) {
-    return desc(
-      'Greens symbolize growth, balance, and nature. They create a sense of tranquility or environmental awareness, frequently used in health, eco-friendly, or outdoor-related brands.',
-      'They can also suggest wealth or stability (especially deeper greens), tying them well to financial services. Overly bright greens can become neon and less “natural.”'
+    return (
+      'Greens often symbolize growth, balance, and nature. They create a sense of tranquility or environmental awareness, ' +
+      'frequently used in health, eco-friendly, or outdoor-related brands.'
     );
   } else if (hue >= 170 && hue < 250) {
-    return desc(
-      'Blues carry associations with trust, stability, and calmness. They’re a top choice for businesses seeking a reliable and secure image, particularly in technology and finance.',
-      'Light blues evoke tranquility or freedom (like a clear sky), while dark blues can appear authoritative or professional. Overusing dark blues may feel conservative or cold.'
+    return (
+      'Blues carry associations with trust, stability, and calmness. They’re a top choice for businesses seeking a reliable and secure image, ' +
+      'particularly in technology, finance, and healthcare.'
     );
   } else if (hue >= 250 && hue < 290) {
-    return desc(
-      'Purples blend the calmness of blue with the energy of red, often seen as luxurious, creative, or spiritual. They’re popular for brands wanting elegance or imagination.',
-      'Lighter lavenders lean toward delicate, romantic feelings, whereas very dark purples may suggest opulence or mystery. Too much purple can seem childish or overly eccentric.'
+    return (
+      'Purples blend the calmness of blue with the energy of red, often seen as luxurious, creative, or spiritual. ' +
+      'They’re popular for brands wanting to convey elegance or imagination.'
     );
   } else if (hue >= 290 && hue < 330) {
-    return desc(
-      'Pinks and magentas can represent romance, youthfulness, or edgy flair. They’re often used in fashion, beauty, or playful brands seeking a vibrant, energetic vibe.',
-      'Hot pink especially grabs attention and fosters a sense of excitement or fun, but can become overwhelming. Softer pinks imply tenderness or compassion.'
+    return (
+      'Pinks and magentas can represent romance, youthfulness, or cutting-edge flair. ' +
+      'They are often used in fashion, beauty, or playful brands seeking a vibrant, energetic vibe.'
     );
   } else {
     // covers hue >= 330 < 360
-    return desc(
-      'Deep reds and crimsons can symbolize power, passion, and refinement. They can be used for a dramatic effect or to impart a bold, luxurious statement.',
-      'They can also lean toward romance or emotional intensity. Be mindful of cultural associations with red, which may vary widely around the globe.'
+    return (
+      'Deep reds and crimsons can symbolize power, passion, and refinement. ' +
+      'They can be used for a dramatic effect or to impart a bold, luxurious statement.'
     );
   }
 }
 
-/**
- * 3. Generate Palette
- * Applies basic color theory expansions from the base color.
- */
+// ---------------------------------------------------
+// 3. GENERATE PALETTE using basic color theory
+// ---------------------------------------------------
 function generatePalette(baseColor) {
   const primary = baseColor.hex();
   const comp = baseColor.set('hsl.h', (baseColor.get('hsl.h') + 180) % 360).hex();
@@ -84,55 +81,64 @@ function generatePalette(baseColor) {
   };
 }
 
-/**
- * 4. Role Usage Explanation
- */
+// ---------------------------------------------------
+// 4. ROLE USAGE EXPLANATIONS (for swatches)
+// ---------------------------------------------------
 function getRoleUsageExplanation(role) {
   switch (role) {
     case 'Primary':
       return (
-        'Primary color: The main brand identifier—used for your logo, key headers, and any element reflecting the core brand character.'
+        'Primary color: The main brand identifier—used for your logo, key headers, ' +
+        'and any element that needs to reflect the brand’s core character.'
       );
     case 'Complementary':
       return (
-        'Complementary color: Opposite on the wheel. Use for accent elements or calls-to-action that need to pop.'
+        'Complementary color: Direct opposite on the color wheel. ' +
+        'Use for accent elements or calls-to-action that need to pop against the primary color.'
       );
     case 'Analogous 1':
       return (
-        'Analogous color (first): Neighbor to the primary hue, ensuring cohesive, harmonious design. Great for backgrounds or subtle highlights.'
+        'Analogous color (first): Neighbor to the primary hue for cohesive, ' +
+        'harmonious designs—great for backgrounds, icons, or subtle highlights.'
       );
     case 'Analogous 2':
       return (
-        'Analogous color (second): Another neighbor to maintain brand unity. Works well for sidebars or alternate sections.'
+        'Analogous color (second): Another neighbor to maintain brand unity. ' +
+        'Use it for sidebars, alternate backgrounds, or supportive text blocks.'
       );
     case 'Triadic 1':
       return (
-        'Triadic color #1: Part of a vibrant trio spaced evenly around the wheel. Inject energy in headings or promotional labels.'
+        'Triadic color #1: Part of a vibrant trio spaced evenly around the color wheel. ' +
+        'Injects energy into headings, buttons, or promotional labels.'
       );
     case 'Triadic 2':
       return (
-        'Triadic color #2: Another hue in the triad. Great for interactive elements, hover states, or secondary CTAs.'
+        'Triadic color #2: Another hue in the triad. ' +
+        'Great for interactive elements, hover states, or secondary CTAs to diversify the palette.'
       );
     case 'Light Shade':
       return (
-        'Light shade: A softer tint of your main hue. Useful for large background areas or high readability.'
+        'Light shade: A softer tint of your main hue. Useful for backgrounds, large areas, ' +
+        'or sections needing high readability with a gentle brand touch.'
       );
     case 'Dark Shade':
       return (
-        'Dark shade: A deeper tone for strong contrast. Perfect for footers, header bars, or bold text overlays.'
+        'Dark shade: A deeper tone for strong contrast. Perfect for footers, ' +
+        'header bars, or bold text overlays.'
       );
     case 'Loud Variant':
       return (
-        'Loud variant: A fully saturated hue. Use sparingly for urgent notices or a prominent “Buy Now” button.'
+        'Loud variant: A fully saturated version of the hue. ' +
+        'Use sparingly for maximum impact—like urgent notices or a prominent “Buy Now” button.'
       );
     default:
       return 'No usage data found.';
   }
 }
 
-/**
- * 5. Build array of 9 swatch objects
- */
+// ---------------------------------------------------
+// 5. BUILD ARRAY OF 9 SWATCH OBJECTS
+// ---------------------------------------------------
 function buildSwatchesData(palette) {
   return [
     { role: 'Primary', color: palette.primary },
@@ -147,9 +153,12 @@ function buildSwatchesData(palette) {
   ];
 }
 
-/**
- * 6. SETTINGS PANEL
- */
+// ---------------------------------------------------
+// 6. SETTINGS PANEL
+//    - Dropdown for theme
+//    - Color picker for custom
+//    - Toggle "Use White Base" for site preview
+// ---------------------------------------------------
 const ColorInputPanel = ({
   colorValue,
   onColorChange,
@@ -172,18 +181,18 @@ const ColorInputPanel = ({
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-semibold text-gray-700">Choose Base Color / Theme</h2>
+    <div className="color-input-panel">
+      <h2 className="panel-title">Choose Base Color / Theme</h2>
 
-      <div className="flex items-center gap-2">
-        <label className="font-semibold" htmlFor="themeSelect">
+      {/* THEME DROPDOWN */}
+      <div className="input-group">
+        <label className="label" htmlFor="themeSelect">
           Preset Theme:
         </label>
         <select
           id="themeSelect"
           value={theme}
           onChange={handleThemeSelect}
-          className="border rounded px-2 py-1"
         >
           {themeOptions.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -193,8 +202,9 @@ const ColorInputPanel = ({
         </select>
       </div>
 
-      <div className="flex items-center gap-2">
-        <label className="font-semibold" htmlFor="colorPicker">
+      {/* COLOR PICKER (ONLY ACTIVE FOR "CUSTOM") */}
+      <div className="input-group">
+        <label className="label" htmlFor="colorPicker">
           Base Color:
         </label>
         <input
@@ -203,20 +213,18 @@ const ColorInputPanel = ({
           disabled={theme !== 'custom'}
           value={colorValue}
           onChange={handleColorChange}
-          className={`h-8 w-16 border rounded ${
-            theme === 'custom' ? 'cursor-pointer' : 'cursor-not-allowed'
-          }`}
         />
       </div>
 
-      <div className="flex items-center gap-2">
+      {/* TOGGLE WHITE BASE FOR PREVIEW */}
+      <div className="input-group toggle-row">
         <input
           type="checkbox"
           id="whiteBaseToggle"
           checked={useWhiteBase}
           onChange={handleWhiteBaseToggle}
         />
-        <label className="font-semibold" htmlFor="whiteBaseToggle">
+        <label className="label" htmlFor="whiteBaseToggle">
           Use White Base Layout
         </label>
       </div>
@@ -224,53 +232,52 @@ const ColorInputPanel = ({
   );
 };
 
-/**
- * 7. PALETTE DISPLAY & Explanation
- */
+// ---------------------------------------------------
+// 7. PALETTE DISPLAY & Explanation
+//    - 9 swatches row (clickable)
+//    - Color psychology text
+// ---------------------------------------------------
 const PaletteDisplay = ({ palette, baseColor, onSwatchClick }) => {
   const swatches = buildSwatchesData(palette);
-  const { primaryImpact } = getColorPsychologyDescription(baseColor);
+  const psychologyText = getColorPsychologyDescription(baseColor);
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-semibold text-gray-700">Color Palette & Explanation</h2>
+    <div className="palette-container">
+      <h2 className="panel-title">Color Palette & Explanation</h2>
 
-      {/* SWATCHES ROW */}
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+      {/* SWATCHES ROW (CLICKABLE) */}
+      <div className="swatches-row">
         {swatches.map((s) => (
-          <button
+          <div
             key={s.role}
-            onClick={() => onSwatchClick(s)}
-            className="relative h-16 rounded shadow-sm hover:scale-105 transition-transform"
+            className="swatch-box"
             style={{ backgroundColor: s.color }}
+            onClick={() => onSwatchClick(s)}
           >
-            <span className="absolute inset-0 flex items-center justify-center text-white text-sm font-medium drop-shadow-md">
-              {s.role}
-            </span>
-          </button>
+            <div className="swatch-label">{s.role}</div>
+          </div>
         ))}
       </div>
 
       {/* BASE COLOR PSYCHOLOGY */}
-      <div>
-        <h4 className="text-lg font-medium text-gray-600 mb-1">
-          Psychological Impact of Your Base Color
-        </h4>
-        <p className="text-sm leading-relaxed text-gray-700">{primaryImpact}</p>
+      <div className="psychology-section">
+        <h4>Psychological Impact of Your Base Color</h4>
+        <p>{psychologyText}</p>
       </div>
     </div>
   );
 };
 
-/**
- * 8. COLOR DETAILS PANEL
- */
+// ---------------------------------------------------
+// 8. COLOR DETAILS PANEL
+//    - Shows more info about a clicked swatch
+// ---------------------------------------------------
 const ColorDetailsPanel = ({ selectedSwatch }) => {
   if (!selectedSwatch) {
     return (
-      <div className="flex flex-col gap-4">
-        <h2 className="text-xl font-semibold text-gray-700">Color Details</h2>
-        <p className="text-gray-600">Select a swatch above to see details.</p>
+      <div className="color-details-panel">
+        <h2 className="panel-title">Color Details</h2>
+        <p>Select a swatch above to see details.</p>
       </div>
     );
   }
@@ -278,96 +285,97 @@ const ColorDetailsPanel = ({ selectedSwatch }) => {
   const { role, color } = selectedSwatch;
   const usageText = getRoleUsageExplanation(role);
   const colorObj = chroma(color);
-  const { primaryImpact, secondaryImpact } = getColorPsychologyDescription(colorObj);
-
-  const hsl = colorObj.hsl().map((val, i) => {
+  const psychologyText = getColorPsychologyDescription(colorObj);
+  const hslString = colorObj.hsl().map((val, i) => {
+    // Format H, S, L with some rounding
     if (i === 0) return `${Math.round(val)}°`;
-    return `${Math.round(val * 100)}%`;
+    if (i > 0) return `${Math.round(val * 100)}%`;
+    return val;
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-semibold text-gray-700">Color Details</h2>
-
+    <div className="color-details-panel">
+      <h2 className="panel-title">Color Details</h2>
       <div
-        className="w-full h-20 rounded flex items-center justify-center text-white text-lg font-bold shadow-md"
+        className="detail-swatch"
         style={{ backgroundColor: color }}
       >
-        {role}
+        <span>{role}</span>
       </div>
-
-      <div className="text-sm text-gray-700 space-y-2 leading-relaxed">
+      <div className="detail-info">
         <p><strong>Hex:</strong> {color}</p>
-        <p><strong>HSL:</strong> h: {hsl[0]}, s: {hsl[1]}, l: {hsl[2]}</p>
+        <p><strong>HSL:</strong> h: {hslString[0]}, s: {hslString[1]}, l: {hslString[2]}</p>
         <p><strong>Usage Advice:</strong> {usageText}</p>
-        <p><strong>Primary Psych Impact:</strong> {primaryImpact}</p>
-        <p><strong>Secondary Psych Impact:</strong> {secondaryImpact}</p>
+        <p><strong>Psychological Impact:</strong> {psychologyText}</p>
       </div>
     </div>
   );
 };
 
-/**
- * 9. EXTENDED SITE PREVIEW
- * This version truly toggles to a mostly white layout if "useWhiteBase" is on.
- */
+// ---------------------------------------------------
+// 9. EXTENDED SITE PREVIEW
+//    - If "useWhiteBase" is true => keep backgrounds mostly white
+//      and apply accent blocks
+//    - Otherwise => use palette backgrounds for sections
+// ---------------------------------------------------
 const MockSitePreview = ({ palette, useWhiteBase }) => {
-  // We'll define some base colors that differ based on the toggle.
-  // White base => mostly #fff or near white sections, with brand accent in nav or CTA.
-  const navBg = useWhiteBase ? palette.primary : palette.primary;
-  const navTextColor = chroma.contrast(navBg, 'black') > 4.5 ? 'black' : 'white';
-
+  // Example usage of palette with a mostly white base if toggled
+  const navBg = useWhiteBase ? palette.darkShade : palette.primary;
   const heroBg = useWhiteBase ? '#fff' : palette.monotonal.light;
-  const heroTextColor = chroma.contrast(heroBg, 'black') > 4.5 ? 'black' : 'white';
+  const featuresBg = useWhiteBase ? '#fff' : palette.analogous[0];
+  const testimonialBg = useWhiteBase ? '#fdfdfd' : palette.triadic[0];
+  const ctaBg = palette.variants.loud;
+  const footerBg = useWhiteBase ? palette.darkShade : palette.complementary;
 
-  const featuresBg = useWhiteBase ? '#fafafa' : palette.analogous[0];
-  const featuresTextColor = chroma.contrast(featuresBg, 'black') > 4.5 ? 'black' : 'white';
-
-  const testimonialBg = useWhiteBase ? '#fefefe' : palette.triadic[0];
-  const testimonialTextColor = chroma.contrast(testimonialBg, 'black') > 4.5 ? 'black' : 'white';
-
-  const ctaBg = useWhiteBase ? palette.complementary : palette.variants.loud;
+  // Contrasting text color
+  const navTextColor = chroma.contrast(navBg, 'black') > 4.5 ? 'black' : 'white';
+  const heroTextColor =
+    chroma.contrast(heroBg, 'black') > 4.5 ? 'black' : 'white';
+  const featuresTextColor =
+    chroma.contrast(featuresBg, 'black') > 4.5 ? 'black' : 'white';
+  const testimonialTextColor =
+    chroma.contrast(testimonialBg, 'black') > 4.5 ? 'black' : 'white';
   const ctaTextColor = chroma.contrast(ctaBg, 'black') > 4.5 ? 'black' : 'white';
+  const footerTextColor =
+    chroma.contrast(footerBg, 'black') > 4.5 ? 'black' : 'white';
 
-  const footerBg = useWhiteBase ? '#f8f9fa' : palette.darkShade;
-  const footerTextColor = chroma.contrast(footerBg, 'black') > 4.5 ? 'black' : 'white';
-
-  // For the hero button
-  const heroCtaBg = useWhiteBase ? palette.complementary : palette.monotonal.dark;
-  const heroCtaColor = chroma.contrast(heroCtaBg, 'black') > 4.5 ? 'black' : 'white';
+  // For hero CTA button background
+  const heroCtaBg = useWhiteBase ? palette.primary : palette.monotonal.dark;
+  const heroCtaColor =
+    chroma.contrast(heroCtaBg, 'black') > 4.5 ? 'black' : 'white';
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-semibold text-gray-700">Full Example Site Preview</h2>
+    <div className="site-preview-panel">
+      <h2 className="panel-title">Full Example Site Preview</h2>
+      <div className="site-container" style={{ backgroundColor: useWhiteBase ? '#fff' : '#fefefe' }}>
 
-      <div className="border border-gray-300 rounded shadow overflow-hidden flex flex-col">
         {/* NAVIGATION */}
         <nav
-          className="flex items-center justify-between px-4 py-3"
+          className="site-nav"
           style={{ backgroundColor: navBg, color: navTextColor }}
         >
-          <h1 className="font-bold text-xl">My Brand</h1>
-          <ul className="flex gap-6 text-sm font-medium">
-            <li className="hover:opacity-80 cursor-pointer">Home</li>
-            <li className="hover:opacity-80 cursor-pointer">Features</li>
-            <li className="hover:opacity-80 cursor-pointer">About</li>
-            <li className="hover:opacity-80 cursor-pointer">Contact</li>
+          <h1>My Brand</h1>
+          <ul>
+            <li>Home</li>
+            <li>Features</li>
+            <li>About</li>
+            <li>Contact</li>
           </ul>
         </nav>
 
         {/* HERO SECTION */}
         <section
-          className="p-10 text-center"
+          className="hero-section"
           style={{ backgroundColor: heroBg, color: heroTextColor }}
         >
-          <div className="max-w-xl mx-auto">
-            <h2 className="text-3xl font-bold mb-4">Empower Your Business</h2>
-            <p className="mb-6">
+          <div className="hero-content">
+            <h2>Empower Your Business</h2>
+            <p>
               Welcome to our platform, where innovative solutions come together
               to boost your success.
             </p>
             <button
-              className="px-6 py-3 rounded font-semibold hover:opacity-90 transition"
+              className="cta-button"
               style={{ backgroundColor: heroCtaBg, color: heroCtaColor }}
             >
               Get Started
@@ -377,29 +385,28 @@ const MockSitePreview = ({ palette, useWhiteBase }) => {
 
         {/* FEATURES SECTION */}
         <section
-          className="p-8"
+          className="features-section"
           style={{ backgroundColor: featuresBg, color: featuresTextColor }}
         >
-          <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-2xl font-bold mb-2">Our Core Features</h2>
-            <p className="mb-6">Experience unrivaled quality, performance, and design.</p>
-
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-              <div className="p-4 bg-white/20 rounded shadow-sm">
-                <h3 className="font-semibold text-lg mb-2">Speed</h3>
-                <p className="text-sm">
+          <div className="inner-content">
+            <h2>Our Core Features</h2>
+            <p>Experience unrivaled quality, performance, and design.</p>
+            <div className="features-grid">
+              <div className="feature-box">
+                <h3>Speed</h3>
+                <p>
                   Blazing fast performance to handle your daily tasks with ease.
                 </p>
               </div>
-              <div className="p-4 bg-white/20 rounded shadow-sm">
-                <h3 className="font-semibold text-lg mb-2">Security</h3>
-                <p className="text-sm">
+              <div className="feature-box">
+                <h3>Security</h3>
+                <p>
                   Bank-grade encryption and advanced protection for all your data.
                 </p>
               </div>
-              <div className="p-4 bg-white/20 rounded shadow-sm">
-                <h3 className="font-semibold text-lg mb-2">Design</h3>
-                <p className="text-sm">
+              <div className="feature-box">
+                <h3>Design</h3>
+                <p>
                   Clean, intuitive interfaces that elevate user experience.
                 </p>
               </div>
@@ -409,34 +416,30 @@ const MockSitePreview = ({ palette, useWhiteBase }) => {
 
         {/* TESTIMONIAL SECTION */}
         <section
-          className="p-8 text-center"
+          className="testimonial-section"
           style={{ backgroundColor: testimonialBg, color: testimonialTextColor }}
         >
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4">What Our Clients Say</h2>
-            <blockquote className="italic text-lg mb-3">
+          <div className="inner-content">
+            <h2>What Our Clients Say</h2>
+            <blockquote>
               "A game-changer! Our productivity soared, and our customers love
               the seamless experience."
             </blockquote>
-            <cite className="block text-sm text-gray-700/80">
-              - A Satisfied Customer
-            </cite>
+            <cite>- A Satisfied Customer</cite>
           </div>
         </section>
 
         {/* CALL TO ACTION */}
         <section
-          className="p-10 text-center"
+          className="cta-section"
           style={{ backgroundColor: ctaBg, color: ctaTextColor }}
         >
-          <div className="max-w-xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4">
-              Ready to Transform Your Operations?
-            </h2>
-            <p className="mb-6">Sign up today and see why thousands trust our platform.</p>
+          <div className="inner-content">
+            <h2>Ready to Transform Your Operations?</h2>
+            <p>Sign up today and see why thousands trust our platform.</p>
             <button
-              className="px-6 py-3 rounded font-semibold hover:opacity-90 transition"
-              style={{ backgroundColor: footerBg, color: footerTextColor }}
+              className="cta-button"
+              style={{ backgroundColor: palette.darkShade, color: '#fff' }}
             >
               Start Free Trial
             </button>
@@ -445,29 +448,32 @@ const MockSitePreview = ({ palette, useWhiteBase }) => {
 
         {/* FOOTER */}
         <footer
-          className="text-center py-4 mt-auto"
+          className="site-footer"
           style={{ backgroundColor: footerBg, color: footerTextColor }}
         >
-          <p className="text-sm">&copy; 2025 MyBrand Inc. All rights reserved.</p>
+          <p>&copy; 2025 MyBrand Inc. All rights reserved.</p>
         </footer>
+
       </div>
     </div>
   );
 };
 
-/**
- * 10. MAIN APP
- */
-export default function App() {
-  const [theme, setTheme] = useState('custom');
+// ---------------------------------------------------
+// 10. MAIN APP
+//    - We'll add a new grid area for ColorDetailsPanel
+// ---------------------------------------------------
+const App = () => {
+  const [theme, setTheme] = useState('ocean');
   const [colorValue, setColorValue] = useState('#1E90FF');
   const [baseColor, setBaseColor] = useState(chroma('#1E90FF'));
   const [palette, setPalette] = useState(generatePalette(baseColor));
   const [useWhiteBase, setUseWhiteBase] = useState(false);
 
+  // For the new color details panel
   const [selectedSwatch, setSelectedSwatch] = useState(null);
 
-  // When theme changes, update the color to the theme base
+  // On theme change, update color to the theme’s base color
   useEffect(() => {
     if (theme !== 'custom') {
       const found = themeOptions.find((opt) => opt.value === theme);
@@ -478,7 +484,7 @@ export default function App() {
     }
   }, [theme]);
 
-  // If we are in "custom," watch for color changes
+  // On color change (picker), if in "custom" mode, update baseColor
   useEffect(() => {
     if (theme === 'custom') {
       setBaseColor(chroma(colorValue));
@@ -490,20 +496,16 @@ export default function App() {
     setPalette(generatePalette(baseColor));
   }, [baseColor]);
 
-  // Click on a swatch
+  // Handle click on a swatch
   const handleSwatchClick = (swatchObj) => {
     setSelectedSwatch(swatchObj);
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto p-5">
-      <div
-        className="grid grid-rows-[auto_auto_1fr] grid-cols-[400px_1fr] gap-5"
-        style={{ minHeight: '80vh' }}
-      >
+    <div className="app">
+      <div className="grid-container">
         {/* SETTINGS (Top Left) */}
-        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4"
-             style={{ gridArea: 'settings' }}>
+        <div className="settings-panel">
           <ColorInputPanel
             colorValue={colorValue}
             onColorChange={setColorValue}
@@ -514,9 +516,8 @@ export default function App() {
           />
         </div>
 
-        {/* PALETTE DISPLAY (Second row, left) */}
-        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4"
-             style={{ gridArea: 'palette' }}>
+        {/* PALETTE DISPLAY (Middle Left) */}
+        <div className="palette-panel">
           <PaletteDisplay
             palette={palette}
             baseColor={baseColor}
@@ -524,18 +525,18 @@ export default function App() {
           />
         </div>
 
-        {/* COLOR DETAILS (Third row, left) */}
-        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4"
-             style={{ gridArea: 'details' }}>
+        {/* COLOR DETAILS (Bottom Left) */}
+        <div className="details-panel">
           <ColorDetailsPanel selectedSwatch={selectedSwatch} />
         </div>
 
-        {/* SITE PREVIEW (Right column, spans all rows) */}
-        <div className="bg-white border border-gray-200 rounded shadow p-5 flex flex-col gap-4"
-             style={{ gridArea: 'preview' }}>
+        {/* SITE PREVIEW (Right) */}
+        <div className="preview-panel">
           <MockSitePreview palette={palette} useWhiteBase={useWhiteBase} />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default App;

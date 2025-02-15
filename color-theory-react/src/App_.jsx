@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import chroma from 'chroma-js';
 import { themeOptions } from './constants';
 import './App.css';
+
 /**
  * 2. Primary & Secondary Color Psychology Descriptions
  * Returns a main text and a secondary text for further nuance.
